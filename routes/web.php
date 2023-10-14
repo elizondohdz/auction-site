@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,5 @@ Route::delete('logout', fn () => to_route('auth.destroy')->name('logout'));
 Route::delete('auth', [AuthController::class, 'destroy'])
     ->name('auth.destroy');
 
+Route::resource('user', UserController::class)
+    ->only('create', 'store');
