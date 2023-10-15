@@ -1,12 +1,12 @@
 <!doctype html>
-<html>
+<html><html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   @vite('resources/css/app.css')
   @vite('resources/js/app.js')
 </head>
-<body class="mx-auto mt-10 max-w-2xl text-slate-700 bg-gradient-to-r from-slate-50 to bg-indigo-100">
+<body class="mx-auto w-5/6 mt-10 text-slate-700 bg-gradient-to-r from-slate-50 to bg-indigo-100">
     
         <nav class="flex items-center justify-between p-6">
         <div class="flex items-center gap-3">
