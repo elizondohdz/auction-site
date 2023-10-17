@@ -11,9 +11,17 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::where('ends_at', '>' , Carbon::now())->orderBy('ends_at', 'desc')->get();
+        $filters = request()->only(
+            'search',
+            'name',
+            'category',
+            'condition',
+            'location'
+        );
+
+        $items = Item::where('ends_at', '>' , Carbon::now())->filter($filters)->orderBy('ends_at', 'desc')->get();
 
         return view('item.index', ['items' => $items]);
     }
@@ -37,9 +45,9 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Item $item)
     {
-        //
+        return view('item.show', ['item' => $item]);
     }
 
     /**
