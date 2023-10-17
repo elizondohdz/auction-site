@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,5 @@ Route::delete('auth', [AuthController::class, 'destroy'])
 Route::resource('user', UserController::class)
     ->only('create', 'store');
 Route::resource('item', ItemController::class);
+Route::resource('item.bid', BidController::class)
+    ->only(['store']);
