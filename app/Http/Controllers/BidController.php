@@ -4,26 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
-class ItemController extends Controller
+class BidController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $filters = request()->only(
-            'search',
-            'name',
-            'category',
-            'condition',
-            'location'
-        );
-
-        $items = Item::where('ends_at', '>' , Carbon::now())->filter($filters)->orderBy('ends_at', 'desc')->get();
-
-        return view('item.index', ['items' => $items]);
+        //
     }
 
     /**
@@ -37,17 +26,27 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Item $item)
     {
-        //
+
+        $data = $request->validate([
+            'amount' => 'required|numeric|gt:'. $item->starting_bid
+        ]);
+
+        $item->bids()->create([
+            'amount' => request('amount'),
+            'user_id' => $item->user_id
+        ]);
+
+        return back()->with('success', 'Bid placed successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Item $item)
+    public function show(string $id)
     {
-        return view('item.show', ['item' => $item]);
+        //
     }
 
     /**
