@@ -29,6 +29,20 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-    }
+        $itemsToBid = \App\Models\Item::inRandomOrder()->take(20)->get();
+        $usersToBid = \App\Models\User::inRandomOrder()->take(50)->get();
 
+        foreach($itemsToBid as $auction) {
+            $bidders = $usersToBid->random(rand(1, 20));
+            $current_bid = $auction->starting_bid;
+            
+            foreach($bidders as $bidder) {
+                \App\Models\Bid::factory()->create([
+                    'user_id' => $bidder->id,
+                    'item_id' => $auction->id,
+                    'amount' => $current_bid = $current_bid + rand(50, 500)
+                ]);
+            }
+        }
+    }
 }
